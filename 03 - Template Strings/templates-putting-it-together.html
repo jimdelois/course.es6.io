@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Template Strings!</title>
+  <style>
+    span.fave {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+<script>
+  const songs = [
+      {
+          name: 'Scenes from an Italian Restaurant',
+          keywords: ['bottle', 'red', 'white'],
+      },
+      {
+          name: 'Piano Man',
+          additional: 'harmonica',
+          keywords: ['piano', 'man', 'melody']
+      },
+      {
+          name: 'Big Shot',
+          keywords: ['big', 'shot']
+      },
+      {
+          name: 'Captain Jack',
+          keywords: ['Whiskey']
+      }
+  ];
+
+  const my_favorites = [
+      'Scenes from an Italian Restaurant',
+      'Captain Jack'
+  ];
+
+  // Use Template Tagging! (wordsToUpper the keywords or something)
+
+  const markFavorites = function(strings, ...inputs) {
+      let output = '';
+      strings.forEach((string, idx) => {
+          if(my_favorites.includes(inputs[0])) {
+            inputs[idx] = `<span class="fave">${inputs[idx]}<sup>&dagger;</sup></span>`;
+          }
+          output += string + (inputs[idx] || '');
+      });
+
+      return output;
+
+  };
+
+  const renderTitle = function(title) {
+    return markFavorites`The song name is: ${title}!`;
+  };
+
+  markup = `
+<h1>Billy Joel Songs</h1>
+<ul>
+    ${songs.map( song =>
+        `<li>${renderTitle(song.name)}</li>`
+    ).join('')}
+</ul>
+<p>
+    <dl>
+        <dt>&dagger;</dt>
+        <dd>Personal Favorite</dd>
+    </dl>
+</p>
+`;
+
+  document.body.innerHTML = markup;
+
+</script>
+</body>
+</html>
